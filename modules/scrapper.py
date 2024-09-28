@@ -1,8 +1,5 @@
-from asyncio import exceptions
-import queue
 from ssl import Options
 import time
-import logging
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.common.by import By
@@ -11,6 +8,7 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+from .proxy import *
 
 def detailed_job_post(job_post_link):
     data = {'Seniority level' : 'NA', 'Employment type' : 'NA', 'Job function' : 'NA', 'Industries' : 'NA'}
@@ -74,7 +72,7 @@ def scrap_job(job_role,location):
             time.sleep(scroll_pause_time)
         else:
             break
-        post = driver.find_elements(By.CSS_SELECTOR,'a.base-card__full-link.absolute.top-0.right-0.bottom-0.left-0.p-0.z-\[2\]')
+        post = driver.find_elements(By.CSS_SELECTOR,"a.base-card__full-link.absolute.top-0.right-0.bottom-0.left-0.p-0.z-\[2\]")
         queue.append(len(post))
         queue.pop(0)
         if sum(queue)//len(queue) == queue[0]:
